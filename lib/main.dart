@@ -7,13 +7,13 @@ void main() {
   runApp(MyApp());
 }
 
-/// App with list of items and possibility to show tapped item in header.
+/// App with the list of items and possibility to show tapped item in header.
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final TodoStore store = TodoStore();
     return MaterialApp(
-      title: 'Module 3',
+      title: 'Module 3 - Basics',
       home: TodoList(store: store,),
     );
   }
