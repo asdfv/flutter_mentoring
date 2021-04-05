@@ -1,4 +1,4 @@
-# vasili_mentoring_tasks
+# flutter_mentoring
 
 Flutter application for Mentoring program.
 
