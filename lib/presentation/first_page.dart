@@ -16,11 +16,11 @@ class FirstPage extends StatelessWidget {
     final int id = ModalRoute.of(context).settings.arguments;
     return Scaffold(
       appBar: AppBar(title: Text("Some default content")),
-      body: id == null ? _createDefaultPage(context) : _createPostPage(id),
+      body: id == null ? _defaultPage(context) : _postPage(id),
     );
   }
 
-  Widget _createDefaultPage(BuildContext context) {
+  Widget _defaultPage(BuildContext context) {
     return Center(
       child: _elevatedButton(context),
     );
@@ -34,16 +34,16 @@ class FirstPage extends StatelessWidget {
         });
   }
 
-  FutureBuilder<Post> _createPostPage(int id) {
+  FutureBuilder<Post> _postPage(int id) {
     return FutureBuilder<Post>(
       future: repository.getOne(id),
       builder: (context, snapshot) {
         if (snapshot.hasError) {
-          return _showError(context, snapshot.error);
+          return _errorWidget(context, snapshot.error);
         } else if (snapshot.hasData) {
           return Column(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: [_createPost(snapshot.data), _elevatedButton(context)],
+            children: [_postWidget(snapshot.data), _elevatedButton(context)],
           );
         } else {
           return CircularProgressIndicator();
@@ -52,7 +52,7 @@ class FirstPage extends StatelessWidget {
     );
   }
 
-  Widget _showError(BuildContext context, Object error) => Center(
+  Widget _errorWidget(BuildContext context, Object error) => Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -62,7 +62,7 @@ class FirstPage extends StatelessWidget {
         ),
       );
 
-  Widget _createPost(Post post) {
+  Widget _postWidget(Post post) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Column(

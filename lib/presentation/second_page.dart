@@ -21,9 +21,9 @@ class SecondPage extends StatelessWidget {
           future: repository.getAll(),
           builder: (context, snapshot) {
             if (snapshot.hasError) {
-              return _showError(context, snapshot.error);
+              return _errorWidget(context, snapshot.error);
             } else if (snapshot.hasData) {
-              return _buildPosts(context, snapshot.data);
+              return _postsWidget(context, snapshot.data);
             } else {
               return Center(child: CircularProgressIndicator());
             }
@@ -31,7 +31,7 @@ class SecondPage extends StatelessWidget {
         ));
   }
 
-  Widget _showError(BuildContext context, Object error) => Center(
+  Widget _errorWidget(BuildContext context, Object error) => Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -46,7 +46,7 @@ class SecondPage extends StatelessWidget {
         ),
       );
 
-  Widget _buildPosts(BuildContext context, List<Post> posts) {
+  Widget _postsWidget(BuildContext context, List<Post> posts) {
     return ListView.builder(
       itemCount: posts.length,
       padding: EdgeInsets.all(8),
