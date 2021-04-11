@@ -1,3 +1,7 @@
 {
-  "todo_title": "Список дел"
+  "todo_title": "Список дел",
+  "settings_title": "Настройки",
+  "settings_language_label": "Язык: ",
+  "todo_select_item_label": "Выбранное дело: ",
+  "todo_note_label": "Дело"
 }

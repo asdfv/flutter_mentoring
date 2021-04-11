@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:vasili_mentoring_tasks/data/todo_store.dart';
-import 'package:vasili_mentoring_tasks/presentation/settings_page.dart';
+import 'package:flutter_mentoring/data/todo_store.dart';
 
 import 'localization/app_localization.dart';
+import 'settings_page.dart';
 
 class TodoPage extends StatefulWidget {
   static final String route = "/todo";
@@ -55,7 +55,7 @@ class _TodoPageState extends State<TodoPage> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text("Selected item: "),
+                Text(AppLocalizations.of(context).translate("todo_select_item_label")),
                 Center(child: Text(headerText)),
               ],
             ),
@@ -76,7 +76,7 @@ class _TodoPageState extends State<TodoPage> {
 
   Widget _createTodoItem(String todo) {
     return ListTile(
-      title: Text("Note"),
+      title: Text(AppLocalizations.of(context).translate("todo_note_label")),
       subtitle: Text(todo),
       leading: Icon(Icons.work),
       onTap: () {

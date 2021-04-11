@@ -1,4 +1,4 @@
-name: vasili_mentoring_tasks
+name: flutter_mentoring
 description: Flutter application for Mentoring program.
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
@@ -11,9 +11,9 @@ dependencies:
   flutter:
     sdk: flutter
   logger: ^0.9.4
-
   flutter_localizations:
     sdk: flutter
+  shared_preferences: ^0.5.12
 
 dev_dependencies:
   flutter_test:

@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_mentoring/presentation/localization/app_localization.dart';
+import 'package:flutter_mentoring/presentation/localization/locale_inherited_widget.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SettingsPage extends StatelessWidget {
   static final route = "/settings";
@@ -8,44 +11,44 @@ class SettingsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Settings"),
+        title: Text(AppLocalizations.of(context).translate("settings_title")),
       ),
       body: Row(
-        children: [Text("Language: "), Center(child: LanguagePickerWidget())],
+        children: [
+          Text(AppLocalizations.of(context).translate("settings_language_label")),
+          LanguagePickerWidget(),
+        ],
       ),
     );
   }
 }
 
-class LanguagePickerWidget extends StatefulWidget {
-  const LanguagePickerWidget({Key key}) : super(key: key);
-
-  @override
-  _LanguagePickerWidgetState createState() => _LanguagePickerWidgetState();
-}
-
-class _LanguagePickerWidgetState extends State<LanguagePickerWidget> {
-  String dropdownValue = 'English';
-
+class LanguagePickerWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return DropdownButton<String>(
-      value: dropdownValue,
-      icon: const Icon(Icons.arrow_downward),
-      iconSize: 18,
-      elevation: 8,
-      onChanged: (String newValue) {
-        setState(() {
-          dropdownValue = newValue;
+    var localeInheritedWidget = LocaleInheritedWidget.of(context);
+
+    return FutureBuilder<SharedPreferences>(
+        future: SharedPreferences.getInstance(),
+        builder: (context, snapshot) {
+          if (!snapshot.hasData) return CircularProgressIndicator();
+          final currentLocale = snapshot.data.getString("locale");
+          final Function enOnPressed = currentLocale == "ru"
+              ? () {
+                  localeInheritedWidget.changeLocale(Locale('en'));
+                }
+              : null;
+          final Function ruOnPressed = currentLocale == "en"
+              ? () {
+                  localeInheritedWidget.changeLocale(Locale('ru'));
+                }
+              : null;
+          return Row(
+            children: [
+              ElevatedButton(onPressed: enOnPressed, child: Text("En")),
+              ElevatedButton(onPressed: ruOnPressed, child: Text("Ru")),
+            ],
+          );
         });
-      },
-      items: <String>['Русский', 'English']
-          .map<DropdownMenuItem<String>>((String value) {
-        return DropdownMenuItem<String>(
-          value: value,
-          child: Text(value),
-        );
-      }).toList(),
-    );
   }
 }
