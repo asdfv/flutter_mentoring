@@ -9,10 +9,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 class AppLocalizations {
   final Logger log = Logger();
 
-  final Locale locale;
-
-  AppLocalizations(this.locale);
-
   static AppLocalizations of(BuildContext context) =>
       Localizations.of<AppLocalizations>(context, AppLocalizations);
 
@@ -20,17 +16,15 @@ class AppLocalizations {
 
   Map<String, String> _localizedStrings;
 
-  Future<bool> load() async {
+  Future<AppLocalizations> apply(Locale locale) async {
     String jsonString = await rootBundle.loadString('assets/localizations/${locale.languageCode}.json');
     Map<String, dynamic> jsonMap = json.decode(jsonString);
     log.i("Locale loaded: $locale");
-    _localizedStrings = jsonMap.map((key, value) {
-      return MapEntry(key, value.toString());
-    });
-    return true;
+    _localizedStrings = jsonMap.map((key, value) => MapEntry(key, value.toString()));
+    return this;
   }
 
-  String translate(String key) {
+  String getLocalizedString(String key) {
     return _localizedStrings[key];
   }
 }
@@ -48,9 +42,7 @@ class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> 
     final sharedPreferences = await SharedPreferences.getInstance();
     final storedLocale = sharedPreferences.getString("locale");
     final locale = storedLocale == null ? systemLocale : Locale(storedLocale);
-    AppLocalizations localizations = AppLocalizations(locale);
-    await localizations.load();
-    return localizations;
+    return await AppLocalizations().apply(locale);
   }
 
   @override

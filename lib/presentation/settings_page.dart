@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_mentoring/presentation/localization/app_localization.dart';
 import 'package:flutter_mentoring/presentation/localization/locale_inherited_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import 'utils/extensions.dart';
 
 class SettingsPage extends StatelessWidget {
   static final route = "/settings";
@@ -11,11 +12,11 @@ class SettingsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(AppLocalizations.of(context).translate("settings_title")),
+        title: Text(context.getLocalizedString("settings_title")),
       ),
       body: Row(
         children: [
-          Text(AppLocalizations.of(context).translate("settings_language_label")),
+          Text(context.getLocalizedString("settings_language_label")),
           LanguagePickerWidget(),
         ],
       ),
