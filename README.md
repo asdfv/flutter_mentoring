@@ -2,15 +2,9 @@
 
 Flutter application for Mentoring program.
 
-Module 3.
+Module 9.
 
-Common application structure and basic widgets
+Localization and assets.
 
-- ‘Hello, world’ on Flutter
-- Pub, Pubspec.yaml and many more
-- MaterialApp and Scaffold as the common case for the app
-- Common layout widgets (Container, Row, Column, Stack, ListView)
-- Common widgets (Text, Image, Icon, Button, TextField, RaisedButton and more)
-- Common positioning and alignment widgets (Center, Align, Padding)
-- Customization of Text and TextField widgets
-- Image and Icon in use.
+- Based on module 5 home task add localization with 2 languages (Eng + any one you choose)
+- Read examples and materials, watch the videos and continue your learning
