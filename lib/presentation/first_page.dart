@@ -3,9 +3,9 @@ import 'package:flutter/widgets.dart';
 
 import 'second_page.dart';
 
-class FirstPage extends StatelessWidget {
-  static final route = "/first";
+const String firstPageRoute = "/first";
 
+class FirstPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -15,15 +15,15 @@ class FirstPage extends StatelessWidget {
         child: ElevatedButton(
             child: Text("Go next"),
             onPressed: () async {
-              final data = await _navigateToSecond(context);
+              final data = await _navigateToSecond(context, "Some title");
               _showDialog(context, data);
             }),
       )),
     );
   }
 
-  Future _navigateToSecond(BuildContext context) async {
-    return Navigator.pushNamed(context, SecondPage.route);
+  Future _navigateToSecond(BuildContext context, String title) async {
+    return Navigator.pushNamed(context, secondPageRoute, arguments: title);
   }
 
   _showDialog(BuildContext context, String data) {
@@ -41,7 +41,7 @@ class FirstPage extends StatelessWidget {
             ));
   }
 
-  Future<bool> _showExitDialog(BuildContext context) async => showDialog<bool>(
+  _showExitDialog(BuildContext context) => showDialog<bool>(
       context: context,
       builder: (_) => AlertDialog(
             title: Text("Really?"),
