@@ -13,7 +13,7 @@ class FirstPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final int id = ModalRoute.of(context).settings.arguments;
+    final id = ModalRoute.of(context).settings.arguments;
     return Scaffold(
       appBar: AppBar(title: Text("Some default content")),
       body: id == null ? _defaultPage(context) : _postPage(id),

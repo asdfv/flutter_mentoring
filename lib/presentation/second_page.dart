@@ -51,7 +51,7 @@ class SecondPage extends StatelessWidget {
       itemCount: posts.length,
       padding: EdgeInsets.all(8),
       itemBuilder: (context, index) {
-        Post post = posts[index];
+        final post = posts[index];
         return Card(
           elevation: 4,
           child: ListTile(
