@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:vasili_mentoring_tasks/data/post_repository.dart';
-import 'package:vasili_mentoring_tasks/domain/models/post.dart';
 
+import '../data/post_repository.dart';
+import '../domain/models/post.dart';
 import 'first_page.dart';
 
 class SecondPage extends StatelessWidget {

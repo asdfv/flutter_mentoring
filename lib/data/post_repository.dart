@@ -1,9 +1,10 @@
 import 'dart:convert';
 
 import 'package:chopper/chopper.dart' hide Post;
-import 'package:vasili_mentoring_tasks/data/models/post_remote.dart';
-import 'package:vasili_mentoring_tasks/data/posts_api_service.dart';
-import 'package:vasili_mentoring_tasks/domain/models/post.dart';
+
+import '../domain/models/post.dart';
+import 'models/post_remote.dart';
+import 'posts_api_service.dart';
 
 class PostRepository {
   final PostApiService apiService;

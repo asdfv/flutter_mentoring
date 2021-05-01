@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:vasili_mentoring_tasks/data/post_repository.dart';
-import 'package:vasili_mentoring_tasks/domain/models/post.dart';
-import 'package:vasili_mentoring_tasks/presentation/second_page.dart';
+
+import '../data/post_repository.dart';
+import '../domain/models/post.dart';
+import 'second_page.dart';
 
 class FirstPage extends StatelessWidget {
   static final route = "/first";

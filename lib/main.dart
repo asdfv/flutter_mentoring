@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:vasili_mentoring_tasks/data/post_repository.dart';
 
+import 'data/post_repository.dart';
 import 'data/posts_api_service.dart';
-import 'presentation/second_page.dart';
 import 'presentation/first_page.dart';
+import 'presentation/second_page.dart';
 
 void main() {
   runApp(MyApp());

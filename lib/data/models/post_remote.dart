@@ -1,5 +1,10 @@
-import 'package:vasili_mentoring_tasks/domain/models/post.dart';
+import 'package:json_annotation/json_annotation.dart';
 
+import '../../domain/models/post.dart';
+
+part 'post_remote.g.dart';
+
+@JsonSerializable()
 class PostRemote {
   final int id;
   final String title;
@@ -7,16 +12,9 @@ class PostRemote {
 
   PostRemote(this.id, this.title, this.body);
 
-  PostRemote.fromJson(Map<String, dynamic> json)
-      : id = json['id'],
-        title = json['title'],
-        body = json['body'];
+  factory PostRemote.fromJson(Map<String, dynamic> json) => _$PostRemoteFromJson(json);
 
-  Map<String, dynamic> toJson() => {
-        'id': id,
-        'title': title,
-        'body': body,
-      };
+  Map<String, dynamic> toJson() => _$PostRemoteToJson(this);
 
   Post toDomainModel() => Post(id: id, title: title, body: body);
 }
