@@ -21,7 +21,7 @@ class LocalizedApp extends StatefulWidget {
 }
 
 class _LocalizedAppState extends State<LocalizedApp> {
-  var language = "ru";
+  String language;
   final store = TodoStore();
 
   void _change(String language) {
@@ -39,11 +39,15 @@ class _LocalizedAppState extends State<LocalizedApp> {
       onLanguageChanged: (language) {
         _change(language);
       },
-      child: Builder(
-        builder: (ctx) => MaterialAppWidget(
-          locale: Locale(language),
-          store: store,
-        ),
+      child: FutureBuilder<SharedPreferences>(
+        future: SharedPreferences.getInstance(),
+        builder: (ctx, snapshot) {
+          if (!snapshot.hasData) return CircularProgressIndicator();
+          return MaterialAppWidget(
+            locale: Locale(language ?? snapshot.data.getString("locale") ?? "en"),
+            store: store,
+          );
+        },
       ),
     );
   }

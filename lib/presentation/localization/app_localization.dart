@@ -42,6 +42,7 @@ class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> 
     final sharedPreferences = await SharedPreferences.getInstance();
     final storedLocale = sharedPreferences.getString("locale");
     final locale = storedLocale == null ? systemLocale : Locale(storedLocale);
+    sharedPreferences.setString("locale", locale.languageCode);
     return await AppLocalizations().apply(locale);
   }
 
