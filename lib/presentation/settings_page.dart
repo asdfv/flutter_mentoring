@@ -36,12 +36,12 @@ class LanguagePickerWidget extends StatelessWidget {
           final currentLocale = snapshot.data.getString("locale");
           final Function enOnPressed = currentLocale == "ru"
               ? () {
-                  localeInheritedWidget.changeLocale(Locale('en'));
+                  localeInheritedWidget.onLanguageChanged("en");
                 }
               : null;
           final Function ruOnPressed = currentLocale == "en"
               ? () {
-                  localeInheritedWidget.changeLocale(Locale('ru'));
+                  localeInheritedWidget.onLanguageChanged("ru");
                 }
               : null;
           return Row(

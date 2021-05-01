@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_mentoring/presentation/localization/locale_inherited_widget.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'data/todo_store.dart';
 import 'presentation/localization/app_localization.dart';
@@ -14,19 +15,35 @@ void main() {
 /// App with list of items and possibility to show tapped item in header.
 /// Changing language is available on the settings page.
 /// If there are no previously saved by user language then system locale is loaded.
-class LocalizedApp extends StatelessWidget {
+class LocalizedApp extends StatefulWidget {
+  @override
+  _LocalizedAppState createState() => _LocalizedAppState();
+}
+
+class _LocalizedAppState extends State<LocalizedApp> {
+  var language = "ru";
+  final store = TodoStore();
+
+  void _change(String language) {
+    SharedPreferences.getInstance().then((sharedPreferences) {
+      sharedPreferences.setString("locale", language);
+    });
+    setState(() {
+      this.language = language;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    final store = TodoStore();
-
     return LocaleInheritedWidget(
+      onLanguageChanged: (language) {
+        _change(language);
+      },
       child: Builder(
-        builder: (ctx) => StreamBuilder<Locale>(
-            stream: LocaleInheritedWidget.of(ctx).getLocaleStream(),
-            builder: (context, localeStreamSnapshot) => MaterialAppWidget(
-                  locale: localeStreamSnapshot.data,
-                  store: store,
-                )),
+        builder: (ctx) => MaterialAppWidget(
+          locale: Locale(language),
+          store: store,
+        ),
       ),
     );
   }
