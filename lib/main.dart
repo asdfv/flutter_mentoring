@@ -54,10 +54,10 @@ class _LocalizedAppState extends State<LocalizedApp> {
 }
 
 class MaterialAppWidget extends StatelessWidget {
-  const MaterialAppWidget({@required this.locale, @required this.store});
-
   final Locale locale;
   final TodoStore store;
+
+  const MaterialAppWidget({@required this.locale, @required this.store});
 
   @override
   Widget build(BuildContext context) {
