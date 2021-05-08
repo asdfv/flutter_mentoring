@@ -5,10 +5,10 @@ import 'presentation/map_view_page.dart';
 import 'presentation/web_view_page.dart';
 
 void main() {
-  runApp(TabBarDemo());
+  runApp(TabBarApp());
 }
 
-class TabBarDemo extends StatelessWidget {
+class TabBarApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -29,7 +29,9 @@ class TabBarDemo extends StatelessWidget {
             children: [
               WebViewPage(),
               MapViewPage(),
-              VideoViewPage(),
+              VideoViewPage(
+                videoUrl: 'https://flutter.github.io/assets-for-api-docs/assets/videos/butterfly.mp4',
+              ),
             ],
           ),
         ),

@@ -9,20 +9,13 @@ class MapViewPage extends StatefulWidget {
 }
 
 class _MapViewPageState extends State<MapViewPage> {
-  GoogleMapController mapController;
-
-  final LatLng _center = const LatLng(45.521563, -122.677433);
-
-  void _onMapCreated(GoogleMapController controller) {
-    mapController = controller;
-  }
+  final LatLng _center = const LatLng(43.3499, 42.4453);
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
         body: GoogleMap(
-          onMapCreated: _onMapCreated,
           initialCameraPosition: CameraPosition(
             target: _center,
             zoom: 11.0,

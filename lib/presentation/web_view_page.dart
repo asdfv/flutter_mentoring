@@ -19,7 +19,7 @@ class WebViewPageState extends State<WebViewPage> {
   @override
   Widget build(BuildContext context) {
     return WebView(
-      initialUrl: 'https://flutter.dev',
+      initialUrl: 'https://google.com',
     );
   }
 }
