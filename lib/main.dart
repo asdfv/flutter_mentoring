@@ -4,6 +4,9 @@ import 'package:flutter_mentoring/presentation/video_view_page.dart';
 import 'presentation/map_view_page.dart';
 import 'presentation/web_view_page.dart';
 
+/// Module 11. WebView, MapView, VideoPlayer.
+/// App with three tabs with WebView, MapView, VideoPlayer.
+/// MapView contains marker on Elbrus mountain.
 void main() {
   runApp(TabBarApp());
 }

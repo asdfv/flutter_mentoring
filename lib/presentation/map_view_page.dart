@@ -16,6 +16,7 @@ class _MapViewPageState extends State<MapViewPage> {
     return MaterialApp(
       home: Scaffold(
         body: GoogleMap(
+          markers: {Marker(position: _center, markerId: MarkerId("123"))},
           initialCameraPosition: CameraPosition(
             target: _center,
             zoom: 11.0,
