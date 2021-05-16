@@ -6,7 +6,7 @@ import 'settings_page.dart';
 import 'utils/extensions.dart';
 
 class TodoPage extends StatefulWidget {
-  TodoPage({this.store});
+  TodoPage({required this.store});
 
   static final String route = "/todo";
   final TodoStore store;

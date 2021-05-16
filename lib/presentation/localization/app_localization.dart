@@ -10,11 +10,11 @@ class AppLocalizations {
   final Logger log = Logger();
 
   static AppLocalizations of(BuildContext context) =>
-      Localizations.of<AppLocalizations>(context, AppLocalizations);
+      Localizations.of<AppLocalizations>(context, AppLocalizations)!;
 
   static const LocalizationsDelegate<AppLocalizations> delegate = _AppLocalizationsDelegate();
 
-  Map<String, String> _localizedStrings;
+  late Map<String, String> _localizedStrings;
 
   Future<AppLocalizations> apply(Locale locale) async {
     String jsonString = await rootBundle.loadString('assets/localizations/${locale.languageCode}.json');
@@ -24,7 +24,7 @@ class AppLocalizations {
     return this;
   }
 
-  String getLocalizedString(String key) {
+  String? getLocalizedString(String key) {
     return _localizedStrings[key];
   }
 }

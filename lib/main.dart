@@ -21,7 +21,7 @@ class LocalizedApp extends StatefulWidget {
 }
 
 class _LocalizedAppState extends State<LocalizedApp> {
-  String language;
+  String? language;
   final store = TodoStore();
 
   void _change(String language) {
@@ -44,7 +44,7 @@ class _LocalizedAppState extends State<LocalizedApp> {
         builder: (ctx, snapshot) {
           if (!snapshot.hasData) return CircularProgressIndicator();
           return MaterialAppWidget(
-            locale: Locale(language ?? snapshot.data.getString("locale") ?? "en"),
+            locale: Locale(language ?? snapshot.data?.getString("locale") ?? "en"),
             store: store,
           );
         },
@@ -54,7 +54,7 @@ class _LocalizedAppState extends State<LocalizedApp> {
 }
 
 class MaterialAppWidget extends StatelessWidget {
-  const MaterialAppWidget({@required this.locale, @required this.store});
+  const MaterialAppWidget({required this.locale, required this.store});
 
   final Locale locale;
   final TodoStore store;
@@ -80,7 +80,7 @@ class MaterialAppWidget extends StatelessWidget {
         ],
         localeResolutionCallback: (locale, supportedLocales) {
           for (var supportedLocale in supportedLocales) {
-            if (supportedLocale.languageCode == locale.languageCode) {
+            if (supportedLocale.languageCode == locale!.languageCode) {
               return supportedLocale;
             }
           }

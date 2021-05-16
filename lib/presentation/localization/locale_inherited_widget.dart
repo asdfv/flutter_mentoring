@@ -2,11 +2,11 @@
 import 'package:flutter/widgets.dart';
 
 class LocaleInheritedWidget extends InheritedWidget {
-  LocaleInheritedWidget({Key key, this.onLanguageChanged, child}) : super(key: key, child: child);
+  LocaleInheritedWidget({Key? key, required this.onLanguageChanged, child}) : super(key: key, child: child);
 
   final Function(String) onLanguageChanged;
 
-  static LocaleInheritedWidget of(BuildContext context) => context.dependOnInheritedWidgetOfExactType();
+  static LocaleInheritedWidget of(BuildContext context) => context.dependOnInheritedWidgetOfExactType()!;
 
   @override
   bool updateShouldNotify(LocaleInheritedWidget oldWidget) {

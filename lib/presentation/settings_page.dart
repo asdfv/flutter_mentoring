@@ -33,13 +33,13 @@ class LanguagePickerWidget extends StatelessWidget {
         future: SharedPreferences.getInstance(),
         builder: (context, snapshot) {
           if (!snapshot.hasData) return CircularProgressIndicator();
-          final currentLocale = snapshot.data.getString("locale");
-          final Function enOnPressed = currentLocale == "ru"
+          final currentLocale = snapshot.data?.getString("locale");
+          final Function()? enOnPressed = currentLocale == "ru"
               ? () {
                   localeInheritedWidget.onLanguageChanged("en");
                 }
               : null;
-          final Function ruOnPressed = currentLocale == "en"
+          final Function()? ruOnPressed = currentLocale == "en"
               ? () {
                   localeInheritedWidget.onLanguageChanged("ru");
                 }
