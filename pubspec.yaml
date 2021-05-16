@@ -1,0 +1,21 @@
+name: flutter_mentoring
+description: Flutter application for Mentoring program.
+version: 1.0.0+1
+
+environment:
+  sdk: '>=2.12.0-0 <3.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  webview_flutter: ^2.0.4
+  google_maps_flutter: ^2.0.3
+  video_player: ^2.0.0
+  chewie: ^1.0.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+flutter:
+  uses-material-design: true
