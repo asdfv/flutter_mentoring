@@ -24,13 +24,26 @@ class SettingsPage extends StatelessWidget {
   }
 }
 
-class LanguagePickerWidget extends StatelessWidget {
+class LanguagePickerWidget extends StatefulWidget {
+  @override
+  _LanguagePickerWidgetState createState() => _LanguagePickerWidgetState();
+}
+
+class _LanguagePickerWidgetState extends State<LanguagePickerWidget> {
+  late Future<SharedPreferences> sharedPrefsFuture;
+
+  @override
+  void initState() {
+    super.initState();
+    sharedPrefsFuture = SharedPreferences.getInstance();
+  }
+
   @override
   Widget build(BuildContext context) {
     var localeInheritedWidget = LocaleInheritedWidget.of(context);
 
     return FutureBuilder<SharedPreferences>(
-        future: SharedPreferences.getInstance(),
+        future: sharedPrefsFuture,
         builder: (context, snapshot) {
           if (!snapshot.hasData) return CircularProgressIndicator();
           final currentLocale = snapshot.data?.getString("locale");

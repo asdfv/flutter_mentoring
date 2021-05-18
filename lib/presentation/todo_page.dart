@@ -63,7 +63,7 @@ class _TodoPageState extends State<TodoPage> {
           Expanded(
             child: ListView.builder(
               itemBuilder: (context, index) {
-                var todo = todos[index];
+                final todo = todos[index];
                 return _createTodoItem(todo);
               },
               itemCount: todos.length,

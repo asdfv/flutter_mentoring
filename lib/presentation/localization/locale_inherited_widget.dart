@@ -4,7 +4,7 @@ import 'package:flutter/widgets.dart';
 class LocaleInheritedWidget extends InheritedWidget {
   LocaleInheritedWidget({Key? key, required this.onLanguageChanged, child}) : super(key: key, child: child);
 
-  final Function(String) onLanguageChanged;
+  final ValueChanged<String> onLanguageChanged;
 
   static LocaleInheritedWidget of(BuildContext context) => context.dependOnInheritedWidgetOfExactType()!;
 
