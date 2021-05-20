@@ -4,19 +4,17 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:logger/logger.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class AppLocalizations {
   final Logger log = Logger();
 
-  static AppLocalizations of(BuildContext context) =>
-      Localizations.of<AppLocalizations>(context, AppLocalizations)!;
+  static AppLocalizations of(BuildContext context) => Localizations.of<AppLocalizations>(context, AppLocalizations)!;
 
   static const LocalizationsDelegate<AppLocalizations> delegate = _AppLocalizationsDelegate();
 
   late Map<String, String> _localizedStrings;
 
-  Future<AppLocalizations> apply(Locale locale) async {
+  Future<AppLocalizations> use(Locale locale) async {
     String jsonString = await rootBundle.loadString('assets/localizations/${locale.languageCode}.json');
     Map<String, dynamic> jsonMap = json.decode(jsonString);
     log.i("Locale loaded: $locale");
@@ -38,13 +36,7 @@ class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> 
   }
 
   @override
-  Future<AppLocalizations> load(Locale systemLocale) async {
-    final sharedPreferences = await SharedPreferences.getInstance();
-    final storedLocale = sharedPreferences.getString("locale");
-    final locale = storedLocale == null ? systemLocale : Locale(storedLocale);
-    sharedPreferences.setString("locale", locale.languageCode);
-    return await AppLocalizations().apply(locale);
-  }
+  Future<AppLocalizations> load(Locale locale) async => await AppLocalizations().use(locale);
 
   @override
   bool shouldReload(_AppLocalizationsDelegate old) => false;

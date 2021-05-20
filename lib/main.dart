@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:flutter_mentoring/presentation/localization/locale_inherited_widget.dart';
+import 'package:flutter_mentoring/presentation/store/local_store.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'data/todo_store.dart';
@@ -8,65 +8,48 @@ import 'presentation/localization/app_localization.dart';
 import 'presentation/settings_page.dart';
 import 'presentation/todo_page.dart';
 
-void main() {
-  runApp(LocalizedApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  final sharedPreferences = await SharedPreferences.getInstance();
+  final todoStore = TodoStore();
+  runApp(LocalizedApp(todoStore, SharedPreferencesStore(sharedPreferences)));
 }
 
 /// App with list of items and possibility to show tapped item in header.
 /// Changing language is available on the settings page.
 /// If there are no previously saved by user language then system locale is loaded.
 class LocalizedApp extends StatefulWidget {
+  LocalizedApp(this.todoStore, this.localStore);
+
+  final LocalStore localStore;
+  final TodoStore todoStore;
+
   @override
   _LocalizedAppState createState() => _LocalizedAppState();
+
+  static _LocalizedAppState? of(BuildContext context) => context.findAncestorStateOfType<_LocalizedAppState>();
 }
 
 class _LocalizedAppState extends State<LocalizedApp> {
-  String? language;
-  final store = TodoStore();
+  String? _language;
 
-  void _change(String language) {
-    SharedPreferences.getInstance().then((sharedPreferences) {
-      sharedPreferences.setString("locale", language);
-    });
+  String? getLanguage() => _language;
+
+  void setLanguage(String language) {
     setState(() {
-      this.language = language;
+      _language = language;
     });
+    widget.localStore.saveLanguage(language);
   }
-
-  @override
-  Widget build(BuildContext context) {
-    return LocaleInheritedWidget(
-      onLanguageChanged: (language) {
-        _change(language);
-      },
-      child: FutureBuilder<SharedPreferences>(
-        future: SharedPreferences.getInstance(),
-        builder: (ctx, snapshot) {
-          if (!snapshot.hasData) return CircularProgressIndicator();
-          return MaterialAppWidget(
-            locale: Locale(language ?? snapshot.data?.getString("locale") ?? "en"),
-            store: store,
-          );
-        },
-      ),
-    );
-  }
-}
-
-class MaterialAppWidget extends StatelessWidget {
-  const MaterialAppWidget({required this.locale, required this.store});
-
-  final Locale locale;
-  final TodoStore store;
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
         title: 'Module 9. Localizations and assets.',
         initialRoute: TodoPage.route,
-        locale: locale,
+        locale: _language != null ? Locale(_language!) : null,
         routes: {
-          TodoPage.route: (_) => TodoPage(store: store),
+          TodoPage.route: (_) => TodoPage(store: widget.todoStore),
           SettingsPage.route: (_) => SettingsPage(),
         },
         supportedLocales: [
@@ -78,13 +61,18 @@ class MaterialAppWidget extends StatelessWidget {
           GlobalMaterialLocalizations.delegate,
           GlobalWidgetsLocalizations.delegate,
         ],
-        localeResolutionCallback: (locale, supportedLocales) {
-          for (var supportedLocale in supportedLocales) {
-            if (supportedLocale.languageCode == locale!.languageCode) {
-              return supportedLocale;
-            }
+        localeResolutionCallback: (currentLocale, supportedLocales) {
+          final storedLanguage = widget.localStore.getCurrentLanguage();
+          final Locale localeToLoad;
+          if (storedLanguage == null) {
+            localeToLoad =
+                supportedLocales.contains(currentLocale) && currentLocale != null ? currentLocale : supportedLocales.first;
+            widget.localStore.saveLanguage(localeToLoad.languageCode);
+          } else {
+            localeToLoad = Locale(storedLanguage);
           }
-          return supportedLocales.first;
+          _language = localeToLoad.languageCode;
+          return localeToLoad;
         });
   }
 }
