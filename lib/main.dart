@@ -3,7 +3,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_mentoring/presentation/store/local_store.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'data/todo_store.dart';
+import 'data/todo_datasource.dart';
 import 'presentation/localization/app_localization.dart';
 import 'presentation/settings_page.dart';
 import 'presentation/todo_page.dart';
@@ -11,18 +11,18 @@ import 'presentation/todo_page.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final sharedPreferences = await SharedPreferences.getInstance();
-  final todoStore = TodoStore();
-  runApp(LocalizedApp(todoStore, SharedPreferencesStore(sharedPreferences)));
+  final todoDatasource = TodoDataSource();
+  runApp(LocalizedApp(todoDatasource, SharedPreferencesStore(sharedPreferences)));
 }
 
 /// App with list of items and possibility to show tapped item in header.
 /// Changing language is available on the settings page.
 /// If there are no previously saved by user language then system locale is loaded.
 class LocalizedApp extends StatefulWidget {
-  LocalizedApp(this.todoStore, this.localStore);
+  LocalizedApp(this.todoDatasource, this.localStore);
 
   final LocalStore localStore;
-  final TodoStore todoStore;
+  final TodoDataSource todoDatasource;
 
   @override
   _LocalizedAppState createState() => _LocalizedAppState();
@@ -49,7 +49,7 @@ class _LocalizedAppState extends State<LocalizedApp> {
         initialRoute: TodoPage.route,
         locale: _language != null ? Locale(_language!) : null,
         routes: {
-          TodoPage.route: (_) => TodoPage(store: widget.todoStore),
+          TodoPage.route: (_) => TodoPage(store: widget.todoDatasource),
           SettingsPage.route: (_) => SettingsPage(),
         },
         supportedLocales: [
@@ -65,8 +65,9 @@ class _LocalizedAppState extends State<LocalizedApp> {
           final storedLanguage = widget.localStore.getCurrentLanguage();
           final Locale localeToLoad;
           if (storedLanguage == null) {
-            localeToLoad =
-                supportedLocales.contains(currentLocale) && currentLocale != null ? currentLocale : supportedLocales.first;
+            localeToLoad = supportedLocales.contains(currentLocale) && currentLocale != null
+                ? currentLocale
+                : supportedLocales.first;
             widget.localStore.saveLanguage(localeToLoad.languageCode);
           } else {
             localeToLoad = Locale(storedLanguage);

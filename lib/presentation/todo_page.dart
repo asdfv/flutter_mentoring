@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_mentoring/data/todo_store.dart';
+import 'package:flutter_mentoring/data/todo_datasource.dart';
 
 import 'settings_page.dart';
 import 'utils/extensions.dart';
@@ -9,7 +9,7 @@ class TodoPage extends StatefulWidget {
   TodoPage({required this.store});
 
   static final String route = "/todo";
-  final TodoStore store;
+  final TodoDataSource store;
 
   @override
   _TodoPageState createState() => _TodoPageState();
